@@ -1,0 +1,183 @@
+# Asset-Specific Trading Strategies Configuration
+# Optimized configurations for 14 different synthetic indices
+
+# Lot sizes for each asset
+lot_sizes:
+  "1HZ75V": 0.05
+  "R_75": 0.01
+  "R_100": 0.5
+  "1HZ100V": 0.2
+  "R_50": 4.0
+  "1HZ50V": 0.01
+  "R_25": 0.5
+  "R_10": 0.5
+  "1HZ10V": 0.5
+  "1HZ25V": 0.01
+  "stpRNG": 0.1
+  "stpRNG2": 0.1
+  "stpRNG3": 0.1
+  "stpRNG4": 0.1
+  "stpRNG5": 0.1
+
+# Asset categories and their specific strategy configurations
+asset_categories:
+  volatility_indices:
+    assets: ["R_75", "R_100", "R_50", "R_25", "R_10"]
+    description: "High volatility synthetic indices"
+    strategy_config:
+      primary_timeframes: ["M1", "M5"]
+      secondary_timeframes: ["M15", "M30"]
+      indicators:
+        ema_fast: [5, 8, 13]
+        ema_slow: [21, 34, 50]
+        sma_periods: [8, 21, 50]
+        macd:
+          fast: 8
+          slow: 21
+          signal: 5
+        rsi_period: 7
+        bollinger:
+          period: 13
+          deviation: 1.5
+        adx_period: 14
+        stochastic:
+          k_period: 14
+          d_period: 3
+          smooth: 3
+      strategy_weights:
+        ema_strategy: 0.35
+        sma_macd_strategy: 0.30
+        bollinger_rsi_strategy: 0.20
+        adaptive_strategy: 0.15
+      risk_management:
+        max_spread: 3.0
+        min_volatility: 0.0005
+        max_volatility: 0.05
+        stop_loss_atr_multiplier: 2.0
+        take_profit_ratio: 2.5
+
+  hz_indices:
+    assets: ["1HZ75V", "1HZ100V", "1HZ50V", "1HZ10V", "1HZ25V"]
+    description: "1Hz frequency synthetic indices with gap detection"
+    strategy_config:
+      primary_timeframes: ["M1", "M5", "M15"]
+      secondary_timeframes: ["M30", "H1"]
+      indicators:
+        ema_periods: [8, 21, 50]
+        sma_periods: [13, 34, 89]
+        macd:
+          fast: 12
+          slow: 26
+          signal: 9
+        rsi_period: 14
+        bollinger:
+          period: 20
+          deviation: 2.0
+        adx_period: 21
+        stochastic:
+          k_period: 21
+          d_period: 5
+          smooth: 5
+      gap_detection:
+        enabled: true
+        min_gap_size: 0.0001
+        gap_timeout: 300  # seconds
+      strategy_weights:
+        hybrid_ema_sma: 0.40
+        gap_strategy: 0.25
+        sma_macd_strategy: 0.20
+        bollinger_rsi_strategy: 0.15
+      risk_management:
+        max_spread: 2.5
+        min_volatility: 0.0003
+        max_volatility: 0.03
+        stop_loss_atr_multiplier: 1.8
+        take_profit_ratio: 2.0
+
+  step_indices:
+    assets: ["stpRNG", "stpRNG2", "stpRNG3", "stpRNG4", "stpRNG5"]
+    description: "Step indices optimized for ranging markets"
+    strategy_config:
+      primary_timeframes: ["M5", "M15", "M30"]
+      secondary_timeframes: ["H1", "H4"]
+      indicators:
+        sma_periods: [21, 55, 89, 144]  # Fibonacci sequence
+        ema_periods: [13, 34, 89]
+        macd:
+          fast: 5
+          slow: 13
+          signal: 3
+        rsi_period: 21
+        bollinger:
+          period: 34
+          deviation: 2.5
+        adx_period: 28
+        stochastic:
+          k_period: 21
+          d_period: 5
+          smooth: 5
+      fibonacci_levels:
+        enabled: true
+        periods: [5, 8, 13, 21, 34, 55, 89, 144]
+      strategy_weights:
+        bollinger_rsi_strategy: 0.45
+        fibonacci_strategy: 0.25
+        sma_macd_strategy: 0.20
+        mean_reversion_strategy: 0.10
+      risk_management:
+        max_spread: 2.0
+        min_volatility: 0.0002
+        max_volatility: 0.02
+        stop_loss_atr_multiplier: 1.5
+        take_profit_ratio: 1.8
+
+# Global strategy parameters
+global_config:
+  max_concurrent_trades: 3
+  max_trades_per_asset: 1
+  correlation_threshold: 0.7
+  
+  # Multi-timeframe analysis weights
+  timeframe_weights:
+    M1: 0.15
+    M5: 0.25
+    M15: 0.20
+    M30: 0.15
+    H1: 0.15
+    H4: 0.10
+
+  # Market regime detection
+  regime_detection:
+    trending_threshold: 25  # ADX value
+    ranging_threshold: 20   # ADX value
+    volatility_lookback: 50
+    volume_analysis: false  # Not available for synthetic indices
+
+  # Signal confirmation requirements
+  signal_confirmation:
+    min_timeframes: 2
+    required_indicators: 3
+    confluence_threshold: 0.7
+
+# Performance optimization settings
+performance:
+  parallel_processing: true
+  max_workers: 4
+  cache_indicators: true
+  cache_duration: 300  # seconds
+  
+  # Real-time processing
+  update_frequency: 1  # seconds
+  latency_target: 100  # milliseconds
+  
+  # Data retention
+  historical_data_days: 30
+  backup_frequency: "daily"
+  
+# Logging configuration
+logging:
+  level: "INFO"
+  trade_logging: true
+  indicator_logging: false
+  performance_logging: true
+  error_logging: true
