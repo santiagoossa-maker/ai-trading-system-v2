@@ -1,0 +1,140 @@
+assets:
+  - name: R_75
+    multiplier: 0.01
+    strategy:
+      type: "EMA Fast"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "EMA(50)"
+      
+  - name: R_100
+    multiplier: 0.5
+    strategy:
+      type: "EMA Fast"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "EMA(50)"
+        
+  - name: R_50
+    multiplier: 4.0
+    strategy:
+      type: "EMA Fast"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "EMA(50)"
+        
+  - name: R_25
+    multiplier: 0.5
+    strategy:
+      type: "EMA Fast"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "EMA(50)"
+        
+  - name: R_10
+    multiplier: 0.5
+    strategy:
+      type: "EMA Fast"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "EMA(50)"
+        
+  - name: 1HZ75V
+    multiplier: 0.05
+    strategy:
+      type: "Hybrid EMA/SMA"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "SMA(20)"
+        - "Gap Detection"
+        
+  - name: 1HZ100V
+    multiplier: 0.2
+    strategy:
+      type: "Hybrid EMA/SMA"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "SMA(20)"
+        - "Gap Detection"
+        
+  - name: 1HZ50V
+    multiplier: 0.01
+    strategy:
+      type: "Hybrid EMA/SMA"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "SMA(20)"
+        - "Gap Detection"
+        
+  - name: 1HZ10V
+    multiplier: 0.5
+    strategy:
+      type: "Hybrid EMA/SMA"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "SMA(20)"
+        - "Gap Detection"
+        
+  - name: 1HZ25V
+    multiplier: 0.01
+    strategy:
+      type: "Hybrid EMA/SMA"
+      timeframe: "1H"
+      indicators: 
+        - "EMA(10)"
+        - "SMA(20)"
+        - "Gap Detection"
+        
+  - name: stpRNG
+    multiplier: 0.1
+    strategy:
+      type: "Bollinger + RSI"
+      timeframe: "1H"
+      indicators: 
+        - "Bollinger Bands"
+        - "RSI(14)"
+        
+  - name: stpRNG2
+    multiplier: 0.1
+    strategy:
+      type: "Bollinger + RSI"
+      timeframe: "1H"
+      indicators: 
+        - "Bollinger Bands"
+        - "RSI(14)"
+        
+  - name: stpRNG3
+    multiplier: 0.1
+    strategy:
+      type: "Bollinger + RSI"
+      timeframe: "1H"
+      indicators: 
+        - "Bollinger Bands"
+        - "RSI(14)"
+        
+  - name: stpRNG4
+    multiplier: 0.1
+    strategy:
+      type: "Bollinger + RSI"
+      timeframe: "1H"
+      indicators: 
+        - "Bollinger Bands"
+        - "RSI(14)"
+        
+  - name: stpRNG5
+    multiplier: 0.1
+    strategy:
+      type: "Bollinger + RSI"
+      timeframe: "1H"
+      indicators: 
+        - "Bollinger Bands"
+        - "RSI(14)"
