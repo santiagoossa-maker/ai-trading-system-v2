@@ -1,140 +1,160 @@
+# Asset-Specific Trading Strategies Configuration
+# Optimized configurations for 14 different synthetic indices
+
+# Lot sizes for each asset
+lot_sizes:
+  "1HZ75V": 0.05
+  "R_75": 0.01
+  "R_100": 0.5
+  "1HZ100V": 0.2
+  "R_50": 4.0
+  "1HZ50V": 0.01
+  "R_25": 0.5
+  "R_10": 0.5
+  "1HZ10V": 0.5
+  "1HZ25V": 0.01
+  "stpRNG": 0.1
+  "stpRNG2": 0.1
+  "stpRNG3": 0.1
+  "stpRNG4": 0.1
+  "stpRNG5": 0.1
+
+# Asset-specific strategy configurations
 assets:
-  - name: R_75
+  # Volatility Indices - Fast momentum strategies
+  R_75:
+    strategy: "EMA_FAST"
+    timeframe: "1H"
+    indicators:
+      - "EMA_12"
+      - "EMA_26"
+      - "RSI_14"
     multiplier: 0.01
-    strategy:
-      type: "EMA Fast"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "EMA(50)"
-      
-  - name: R_100
+    
+  R_100:
+    strategy: "EMA_FAST"
+    timeframe: "1H"
+    indicators:
+      - "EMA_12"
+      - "EMA_26"
+      - "MACD"
     multiplier: 0.5
-    strategy:
-      type: "EMA Fast"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "EMA(50)"
-        
-  - name: R_50
+    
+  R_50:
+    strategy: "EMA_FAST"
+    timeframe: "1H"
+    indicators:
+      - "EMA_9"
+      - "EMA_21"
+      - "RSI_14"
     multiplier: 4.0
-    strategy:
-      type: "EMA Fast"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "EMA(50)"
-        
-  - name: R_25
+    
+  R_25:
+    strategy: "EMA_FAST"
+    timeframe: "1H"
+    indicators:
+      - "EMA_12"
+      - "EMA_26"
+      - "STOCH"
     multiplier: 0.5
-    strategy:
-      type: "EMA Fast"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "EMA(50)"
-        
-  - name: R_10
+    
+  R_10:
+    strategy: "EMA_FAST"
+    timeframe: "1H"
+    indicators:
+      - "EMA_8"
+      - "EMA_21"
+      - "RSI_21"
     multiplier: 0.5
-    strategy:
-      type: "EMA Fast"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "EMA(50)"
-        
-  - name: 1HZ75V
+
+  # HZ Indices - Hybrid strategies with gap detection
+  1HZ75V:
+    strategy: "HYBRID_EMA_SMA"
+    timeframe: "30M"
+    indicators:
+      - "EMA_12"
+      - "SMA_20"
+      - "GAP_DETECTION"
     multiplier: 0.05
-    strategy:
-      type: "Hybrid EMA/SMA"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "SMA(20)"
-        - "Gap Detection"
-        
-  - name: 1HZ100V
+    
+  1HZ100V:
+    strategy: "HYBRID_EMA_SMA"
+    timeframe: "30M"
+    indicators:
+      - "EMA_12"
+      - "SMA_20"
+      - "GAP_DETECTION"
     multiplier: 0.2
-    strategy:
-      type: "Hybrid EMA/SMA"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "SMA(20)"
-        - "Gap Detection"
-        
-  - name: 1HZ50V
+    
+  1HZ50V:
+    strategy: "HYBRID_EMA_SMA"
+    timeframe: "30M"
+    indicators:
+      - "EMA_12"
+      - "SMA_20"
+      - "GAP_DETECTION"
     multiplier: 0.01
-    strategy:
-      type: "Hybrid EMA/SMA"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "SMA(20)"
-        - "Gap Detection"
-        
-  - name: 1HZ10V
+    
+  1HZ10V:
+    strategy: "HYBRID_EMA_SMA"
+    timeframe: "30M"
+    indicators:
+      - "EMA_12"
+      - "SMA_20"
+      - "GAP_DETECTION"
     multiplier: 0.5
-    strategy:
-      type: "Hybrid EMA/SMA"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "SMA(20)"
-        - "Gap Detection"
-        
-  - name: 1HZ25V
+    
+  1HZ25V:
+    strategy: "HYBRID_EMA_SMA"
+    timeframe: "30M"
+    indicators:
+      - "EMA_12"
+      - "SMA_20"
+      - "GAP_DETECTION"
     multiplier: 0.01
-    strategy:
-      type: "Hybrid EMA/SMA"
-      timeframe: "1H"
-      indicators: 
-        - "EMA(10)"
-        - "SMA(20)"
-        - "Gap Detection"
-        
-  - name: stpRNG
+
+  # Step Indices - Range-bound strategies
+  stpRNG:
+    strategy: "BOLLINGER_RSI"
+    timeframe: "5M"
+    indicators:
+      - "BOLLINGER_BANDS"
+      - "RSI_14"
+      - "SUPPORT_RESISTANCE"
     multiplier: 0.1
-    strategy:
-      type: "Bollinger + RSI"
-      timeframe: "1H"
-      indicators: 
-        - "Bollinger Bands"
-        - "RSI(14)"
-        
-  - name: stpRNG2
+    
+  stpRNG2:
+    strategy: "BOLLINGER_RSI"
+    timeframe: "5M"
+    indicators:
+      - "BOLLINGER_BANDS"
+      - "RSI_14"
+      - "SUPPORT_RESISTANCE"
     multiplier: 0.1
-    strategy:
-      type: "Bollinger + RSI"
-      timeframe: "1H"
-      indicators: 
-        - "Bollinger Bands"
-        - "RSI(14)"
-        
-  - name: stpRNG3
+    
+  stpRNG3:
+    strategy: "BOLLINGER_RSI"
+    timeframe: "5M"
+    indicators:
+      - "BOLLINGER_BANDS"
+      - "RSI_14"
+      - "SUPPORT_RESISTANCE"
     multiplier: 0.1
-    strategy:
-      type: "Bollinger + RSI"
-      timeframe: "1H"
-      indicators: 
-        - "Bollinger Bands"
-        - "RSI(14)"
-        
-  - name: stpRNG4
+    
+  stpRNG4:
+    strategy: "BOLLINGER_RSI"
+    timeframe: "5M"
+    indicators:
+      - "BOLLINGER_BANDS"
+      - "RSI_14"
+      - "SUPPORT_RESISTANCE"
     multiplier: 0.1
-    strategy:
-      type: "Bollinger + RSI"
-      timeframe: "1H"
-      indicators: 
-        - "Bollinger Bands"
-        - "RSI(14)"
-        
-  - name: stpRNG5
+    
+  stpRNG5:
+    strategy: "BOLLINGER_RSI"
+    timeframe: "5M"
+    indicators:
+      - "BOLLINGER_BANDS"
+      - "RSI_14"
+      - "SUPPORT_RESISTANCE"
     multiplier: 0.1
-    strategy:
-      type: "Bollinger + RSI"
-      timeframe: "1H"
-      indicators: 
-        - "Bollinger Bands"
-        - "RSI(14)"
