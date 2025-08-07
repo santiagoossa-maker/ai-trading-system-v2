@@ -23,10 +23,18 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
-class SignalType(Enum):
-    BUY = 1
-    SELL = -1
-    HOLD = 0
+# Import the new SMA MACD strategy
+try:
+    from .sma_macd_strategy import SMAMACDStrategy, SignalType, TradingSignal as BaseTradingSignal
+    SMA_STRATEGY_AVAILABLE = True
+except ImportError:
+    SMA_STRATEGY_AVAILABLE = False
+    
+    # Fallback definitions
+    class SignalType(Enum):
+        BUY = 1
+        SELL = -1
+        HOLD = 0
 
 class StrategyType(Enum):
     SMA_MACD = "sma_macd"
@@ -577,7 +585,7 @@ class MultiStrategyEngine:
         strategy_configs = self.config.get('strategies', {})
         
         if strategy_configs.get('sma_macd', {}).get('enabled', True):
-            self.strategies[StrategyType.SMA_MACD] = SMAMACDStrategy(strategy_configs.get('sma_macd', {}))
+            # We'll handle SMA MACD in the generate_signals method
             self.aggregation_weights[StrategyType.SMA_MACD] = strategy_configs.get('sma_macd', {}).get('weight', 0.25)
         
         if strategy_configs.get('ema_macd', {}).get('enabled', True):
@@ -598,14 +606,65 @@ class MultiStrategyEngine:
         
         logger.info(f"Initialized {len(self.strategies)} strategies")
     
-    def generate_signals(self, data: pd.DataFrame, symbol: str, timeframe: str) -> List[TradingSignal]:
-        """Generate signals from all enabled strategies"""
+    def generate_signals(self, market_data: Dict[str, Any]) -> List[TradingSignal]:
+        """
+        Generate signals from market data (updated interface for trading system)
+        
+        Args:
+            market_data: Dictionary with symbol data from MarketDataEngine
+            
+        Returns:
+            List of trading signals
+        """
+        all_signals = []
+        
+        if not market_data:
+            return all_signals
+        
+        for symbol, data in market_data.items():
+            df = data.get('data')
+            timeframe = data.get('timeframe', 'M1')
+            
+            if df is not None and not df.empty:
+                # Use new SMA MACD strategy if available
+                if SMA_STRATEGY_AVAILABLE:
+                    try:
+                        sma_strategy = SMAMACDStrategy()
+                        signal = sma_strategy.generate_signal(df, symbol)
+                        if signal and signal.signal.value != 0:  # Not HOLD
+                            # Convert to multi-strategy format
+                            trading_signal = TradingSignal(
+                                strategy=StrategyType.SMA_MACD,
+                                signal=signal.signal,
+                                strength=signal.strength,
+                                price=signal.price,
+                                timestamp=signal.timestamp,
+                                timeframe=timeframe,
+                                confidence=signal.confidence,
+                                metadata=signal.metadata
+                            )
+                            all_signals.append(trading_signal)
+                    except Exception as e:
+                        logger.error(f"Error with new SMA MACD strategy for {symbol}: {str(e)}")
+                
+                # Generate signals from legacy strategies
+                legacy_signals = self.generate_signals_legacy(df, symbol, timeframe)
+                all_signals.extend(legacy_signals)
+        
+        return all_signals
+    
+    def generate_signals_legacy(self, data: pd.DataFrame, symbol: str, timeframe: str) -> List[TradingSignal]:
+        """Generate signals from all enabled strategies (legacy method)"""
         signals = []
         
-        with ThreadPoolExecutor(max_workers=len(self.strategies)) as executor:
+        # Skip SMA_MACD if new strategy is available (already handled)
+        strategies_to_use = {k: v for k, v in self.strategies.items() 
+                           if not (SMA_STRATEGY_AVAILABLE and k == StrategyType.SMA_MACD)}
+        
+        with ThreadPoolExecutor(max_workers=len(strategies_to_use)) as executor:
             future_to_strategy = {
                 executor.submit(strategy.generate_signal, data, symbol, timeframe): strategy_type
-                for strategy_type, strategy in self.strategies.items()
+                for strategy_type, strategy in strategies_to_use.items()
             }
             
             for future in future_to_strategy:
