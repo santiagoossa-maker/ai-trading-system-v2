@@ -10,7 +10,11 @@ import logging
 from datetime import datetime, timedelta
 
 # Import the comprehensive data pipeline
-from .data_pipeline import DataPipeline, TickData, BarData
+try:
+    from .data_pipeline import DataPipeline, TickData, BarData
+except ImportError:
+    # Fallback for direct execution
+    from data_pipeline import DataPipeline, TickData, BarData
 
 logger = logging.getLogger(__name__)
 

@@ -1,0 +1,21 @@
+2025-08-07 23:57:53,205 - __main__ - INFO - Trading System initialized in demo mode
+2025-08-07 23:57:53,206 - __main__ - INFO - Starting AI Trading System V2 in demo mode
+2025-08-07 23:57:53,206 - __main__ - INFO - Initializing system components...
+2025-08-07 23:57:53,206 - src.core.data_pipeline - WARNING - Redis not available. Caching disabled.
+2025-08-07 23:57:53,206 - src.core.execution_engine - INFO - Execution Engine initialized in demo mode
+2025-08-07 23:57:53,206 - src.strategies.sma_macd_strategy - INFO - SMA/MACD Strategy initialized with SMA(8,50) and MACD(12,26,9)
+2025-08-07 23:57:53,206 - __main__ - INFO - All components initialized successfully
+2025-08-07 23:57:53,206 - __main__ - INFO - Connecting to trading infrastructure...
+2025-08-07 23:57:53,206 - src.core.data_pipeline - ERROR - MetaTrader5 module not available
+2025-08-07 23:57:53,206 - src.core.data_pipeline - ERROR - Failed to connect to MT5
+2025-08-07 23:57:53,206 - src.core.market_data_engine - ERROR - Failed to connect Market Data Engine
+2025-08-07 23:57:53,206 - __main__ - ERROR - Failed to connect market data engine
+2025-08-07 23:57:53,206 - __main__ - ERROR - Failed to connect, cannot start analysis
+2025-08-07 23:57:53,206 - __main__ - ERROR - Failed to start analysis
+2025-08-07 23:57:53,206 - __main__ - INFO - Stopping trading system...
+2025-08-07 23:57:53,207 - __main__ - INFO - Disconnecting trading system...
+2025-08-07 23:57:53,207 - src.core.execution_engine - INFO - Position monitoring stopped
+2025-08-07 23:57:53,207 - src.core.execution_engine - INFO - Disconnected from trading platform
+2025-08-07 23:57:53,207 - __main__ - INFO - All systems disconnected
+2025-08-07 23:57:53,207 - __main__ - INFO - Trading system stopped successfully
+2025-08-07 23:57:53,207 - __main__ - INFO - System shutdown complete

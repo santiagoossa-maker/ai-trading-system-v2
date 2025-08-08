@@ -16,9 +16,30 @@ import os
 import subprocess
 
 # Import core components
-from .market_data_engine import MarketDataEngine
-from .execution_engine import ExecutionEngine, OrderType
-from ..strategies.sma_macd_strategy import SMAMACDStrategy, SignalType
+try:
+    from .market_data_engine import MarketDataEngine
+    from .execution_engine import ExecutionEngine, OrderType
+    from ..strategies.sma_macd_strategy import SMAMACDStrategy, SignalType
+except ImportError:
+    # Fallback for direct execution and testing
+    import sys
+    import os
+    current_dir = os.path.dirname(__file__)
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir not in sys.path:
+        sys.path.append(parent_dir)
+    
+    try:
+        from market_data_engine import MarketDataEngine
+        from execution_engine import ExecutionEngine, OrderType
+        from strategies.sma_macd_strategy import SMAMACDStrategy, SignalType
+    except ImportError:
+        # Last resort - add both directories
+        sys.path.append(current_dir)
+        sys.path.append(os.path.join(parent_dir, 'strategies'))
+        from market_data_engine import MarketDataEngine
+        from execution_engine import ExecutionEngine, OrderType
+        from sma_macd_strategy import SMAMACDStrategy, SignalType
 
 logger = logging.getLogger(__name__)
 
