@@ -19,6 +19,29 @@ lot_sizes:
   "stpRNG4": 0.1
   "stpRNG5": 0.1
 
+# Asset categories for systematic organization
+asset_categories:
+  volatility_indices:
+    assets: ["R_75", "R_100", "R_50", "R_25", "R_10"]
+    strategy_config:
+      default_timeframe: "1H"
+      preferred_strategy: "EMA_FAST"
+      indicators: ["EMA_12", "EMA_26", "RSI_14"]
+  
+  hz_indices:
+    assets: ["1HZ75V", "1HZ100V", "1HZ50V", "1HZ10V", "1HZ25V"]
+    strategy_config:
+      default_timeframe: "30M"
+      preferred_strategy: "HYBRID_EMA_SMA"
+      indicators: ["EMA_12", "SMA_20", "GAP_DETECTION"]
+  
+  step_indices:
+    assets: ["stpRNG", "stpRNG2", "stpRNG3", "stpRNG4", "stpRNG5"]
+    strategy_config:
+      default_timeframe: "5M"
+      preferred_strategy: "BOLLINGER_RSI"
+      indicators: ["BOLLINGER_BANDS", "RSI_14", "SUPPORT_RESISTANCE"]
+
 # Asset-specific strategy configurations
 assets:
   # Volatility Indices - Fast momentum strategies
