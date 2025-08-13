@@ -1,0 +1,156 @@
+# Development Configuration for AI Trading System V2
+# Safe settings for development and testing
+
+# Environment Configuration
+environment:
+  mode: "development"
+  debug: true
+  log_level: "DEBUG"
+  
+# MT5 Connection Configuration (Demo Account)
+mt5:
+  login: ${MT5_DEMO_LOGIN:-"demo_login"}
+  password: ${MT5_DEMO_PASSWORD:-"demo_password"}
+  server: ${MT5_DEMO_SERVER:-"Demo-Server"}
+  path: ${MT5_PATH:-"C:/Program Files/MetaTrader 5"}
+  timeout: 60000
+  max_retries: 3
+  retry_delay: 5
+  
+# Trading Configuration
+trading:
+  # Conservative Risk Management for Development
+  max_daily_loss_percent: 2.0
+  max_concurrent_positions: 3
+  position_size_percent: 0.5
+  max_spread_points: 5.0
+  
+  # Extended Trading Hours for Testing
+  trading_hours:
+    start: "00:00"
+    end: "23:59"
+    break_start: null
+    break_end: null
+    
+  # Conservative Emergency Controls
+  emergency_stop_loss_percent: 5.0
+  max_drawdown_percent: 8.0
+  daily_profit_target_percent: 3.0
+  
+# Database Configuration (Local Development)
+database:
+  redis:
+    host: "localhost"
+    port: 6379
+    password: null
+    db: 1  # Use different DB for dev
+    max_connections: 5
+    socket_timeout: 30
+    
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "trading_system_dev"
+    username: "dev_user"
+    password: "dev_password"
+    pool_size: 5
+    max_overflow: 10
+    
+# Monitoring & Alerting (Relaxed for Development)
+monitoring:
+  health_check_interval: 300  # 5 minutes
+  performance_metrics_interval: 600  # 10 minutes
+  
+  alerts:
+    max_response_time_ms: 5000
+    min_free_memory_percent: 10
+    max_cpu_usage_percent: 90
+    connection_timeout_threshold: 60
+    
+  notifications:
+    email:
+      enabled: false
+      smtp_host: "localhost"
+      smtp_port: 1025  # MailHog for testing
+      username: ""
+      password: ""
+      from_address: "dev@trading-system.local"
+      to_addresses: ["developer@example.com"]
+      
+    telegram:
+      enabled: false
+      bot_token: "test_bot_token"
+      chat_ids: ["test_chat_id"]
+      
+    webhook:
+      enabled: false
+      url: "http://localhost:3000/webhook"
+      headers: {}
+      
+# API Configuration (Development)
+api:
+  host: "127.0.0.1"
+  port: 8000
+  debug: true
+  workers: 1
+  
+  # Relaxed Security for Development
+  jwt_secret: "dev_secret_key_not_for_production"
+  jwt_expire_hours: 168  # 1 week
+  api_key: "dev_api_key"
+  
+  cors_origins: ["*"]  # Allow all origins in dev
+  cors_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+  cors_headers: ["*"]
+  
+  rate_limit:
+    requests_per_minute: 1000
+    burst_limit: 2000
+    
+# Logging Configuration (Verbose for Development)
+logging:
+  level: "DEBUG"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d - %(message)s"
+  
+  file_logging:
+    enabled: true
+    log_dir: "./logs"
+    max_file_size_mb: 50
+    backup_count: 5
+    
+  centralized:
+    enabled: false
+    
+# Performance Configuration (Development)
+performance:
+  max_worker_threads: 2
+  data_buffer_size: 1000
+  indicator_calculation_timeout: 60
+  
+  max_memory_usage_mb: 1024
+  garbage_collection_threshold: 0.9
+  
+  cache_ttl_seconds: 60
+  max_cache_size_mb: 128
+  
+# Security Configuration (Relaxed for Development)
+security:
+  require_api_key: false
+  require_jwt: false
+  
+  allowed_ips: ["*"]  # Allow all IPs in development
+  blocked_ips: []
+  
+  ssl_enabled: false
+  ssl_cert_path: null
+  ssl_key_path: null
+  
+# Backup Configuration (Local Only)
+backup:
+  enabled: true
+  interval_hours: 24
+  retention_days: 7
+  
+  targets:
+    - type: "local"
+      path: "./backups"

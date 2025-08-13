@@ -29,6 +29,41 @@ redis>=4.5.0
 psycopg2-binary>=2.9.0  # PostgreSQL adapter
 sqlalchemy>=2.0.0
 
+# Production API and web framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+
+# Configuration and environment
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# System monitoring
+psutil>=5.9.0
+schedule>=1.2.0
+
+# HTTP requests and networking
+requests>=2.31.0
+aiohttp>=3.8.0
+
+# Email and notifications
+smtplib2>=0.2.0  # Enhanced SMTP
+email-validator>=2.0.0
+
+# Testing and development
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.21.0
+
+# Logging and monitoring
+structlog>=23.0.0
+
+# Security
+cryptography>=41.0.0
+passlib[bcrypt]>=1.7.0
+python-jose[cryptography]>=3.3.0
+
 # Configuration and serialization
 PyYAML>=6.0
 toml>=0.10.2
