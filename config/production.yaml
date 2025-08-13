@@ -1,0 +1,178 @@
+# Production Configuration for AI Trading System V2
+# Enterprise-grade settings for live trading deployment
+
+# Environment Configuration
+environment:
+  mode: "production"  # production, development, testing
+  debug: false
+  log_level: "INFO"
+  
+# MT5 Connection Configuration
+mt5:
+  # These will be overridden by environment variables in production
+  login: ${MT5_LOGIN}
+  password: ${MT5_PASSWORD}  
+  server: ${MT5_SERVER}
+  path: ${MT5_PATH:-"/opt/metatrader5"}
+  timeout: 60000
+  max_retries: 3
+  retry_delay: 5
+  
+# Trading Configuration
+trading:
+  # Risk Management
+  max_daily_loss_percent: 5.0
+  max_concurrent_positions: 10
+  position_size_percent: 2.0
+  max_spread_points: 3.0
+  
+  # Trading Hours (UTC)
+  trading_hours:
+    start: "00:00"
+    end: "23:59"
+    break_start: null
+    break_end: null
+    
+  # Emergency Controls
+  emergency_stop_loss_percent: 10.0
+  max_drawdown_percent: 15.0
+  daily_profit_target_percent: 8.0
+  
+# Database Configuration
+database:
+  redis:
+    host: ${REDIS_HOST:-"localhost"}
+    port: ${REDIS_PORT:-6379}
+    password: ${REDIS_PASSWORD:-null}
+    db: ${REDIS_DB:-0}
+    max_connections: 20
+    socket_timeout: 30
+    
+  postgresql:
+    host: ${POSTGRES_HOST:-"localhost"}
+    port: ${POSTGRES_PORT:-5432}
+    database: ${POSTGRES_DB:-"trading_system"}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    pool_size: 10
+    max_overflow: 20
+    
+# Monitoring & Alerting
+monitoring:
+  health_check_interval: 60  # seconds
+  performance_metrics_interval: 300  # 5 minutes
+  
+  # Alert Thresholds
+  alerts:
+    max_response_time_ms: 1000
+    min_free_memory_percent: 20
+    max_cpu_usage_percent: 80
+    connection_timeout_threshold: 30
+    
+  # Notification Channels
+  notifications:
+    email:
+      enabled: ${EMAIL_ALERTS_ENABLED:-false}
+      smtp_host: ${SMTP_HOST}
+      smtp_port: ${SMTP_PORT:-587}
+      username: ${SMTP_USERNAME}
+      password: ${SMTP_PASSWORD}
+      from_address: ${SMTP_FROM}
+      to_addresses: ${ALERT_EMAIL_RECIPIENTS}
+      
+    telegram:
+      enabled: ${TELEGRAM_ALERTS_ENABLED:-false}
+      bot_token: ${TELEGRAM_BOT_TOKEN}
+      chat_ids: ${TELEGRAM_CHAT_IDS}
+      
+    webhook:
+      enabled: ${WEBHOOK_ALERTS_ENABLED:-false}
+      url: ${WEBHOOK_URL}
+      headers: ${WEBHOOK_HEADERS:-{}}
+      
+# API Configuration
+api:
+  host: ${API_HOST:-"0.0.0.0"}
+  port: ${API_PORT:-8000}
+  debug: false
+  workers: ${API_WORKERS:-4}
+  
+  # Security
+  jwt_secret: ${JWT_SECRET}
+  jwt_expire_hours: 24
+  api_key: ${API_KEY}
+  
+  # CORS
+  cors_origins: ${CORS_ORIGINS:-["http://localhost:3000", "http://localhost:8501"]}
+  cors_methods: ["GET", "POST", "PUT", "DELETE"]
+  cors_headers: ["*"]
+  
+  # Rate Limiting
+  rate_limit:
+    requests_per_minute: 100
+    burst_limit: 200
+    
+# Logging Configuration
+logging:
+  level: ${LOG_LEVEL:-"INFO"}
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+  # File Logging
+  file_logging:
+    enabled: true
+    log_dir: ${LOG_DIR:-"/app/logs"}
+    max_file_size_mb: 100
+    backup_count: 10
+    
+  # Centralized Logging
+  centralized:
+    enabled: ${CENTRALIZED_LOGGING_ENABLED:-false}
+    elasticsearch_url: ${ELASTICSEARCH_URL}
+    logstash_host: ${LOGSTASH_HOST}
+    logstash_port: ${LOGSTASH_PORT:-5044}
+    
+# Performance Configuration
+performance:
+  # Data Processing
+  max_worker_threads: ${MAX_WORKERS:-8}
+  data_buffer_size: 10000
+  indicator_calculation_timeout: 30
+  
+  # Memory Management
+  max_memory_usage_mb: ${MAX_MEMORY_MB:-2048}
+  garbage_collection_threshold: 0.8
+  
+  # Caching
+  cache_ttl_seconds: 300
+  max_cache_size_mb: 512
+  
+# Security Configuration
+security:
+  # API Security
+  require_api_key: true
+  require_jwt: false
+  
+  # IP Filtering
+  allowed_ips: ${ALLOWED_IPS:-["127.0.0.1", "localhost"]}
+  blocked_ips: []
+  
+  # SSL/TLS
+  ssl_enabled: ${SSL_ENABLED:-false}
+  ssl_cert_path: ${SSL_CERT_PATH}
+  ssl_key_path: ${SSL_KEY_PATH}
+  
+# Backup Configuration  
+backup:
+  enabled: ${BACKUP_ENABLED:-true}
+  interval_hours: 6
+  retention_days: 30
+  
+  # Backup Targets
+  targets:
+    - type: "local"
+      path: ${BACKUP_LOCAL_PATH:-"/app/backups"}
+    - type: "s3"
+      bucket: ${BACKUP_S3_BUCKET}
+      region: ${BACKUP_S3_REGION}
+      access_key: ${BACKUP_S3_ACCESS_KEY}
+      secret_key: ${BACKUP_S3_SECRET_KEY}
