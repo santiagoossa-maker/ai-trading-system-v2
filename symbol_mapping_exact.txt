@@ -1,0 +1,19 @@
+# MAPEO EXACTO DE SÍMBOLOS - AI TRADING SYSTEM V2
+# Fecha: 2025-08-26 18:36:04
+# Símbolos funcionando: 15/15
+
+"1HZ75V": "Volatility 75 (1s) Index",
+"R_75": "Volatility 75 Index",
+"R_100": "Volatility 100 Index",
+"1HZ100V": "Volatility 100 (1s) Index",
+"R_50": "Volatility 50 Index",
+"1HZ50V": "Volatility 50 (1s) Index",
+"R_25": "Volatility 25 Index",
+"1HZ25V": "Volatility 25 (1s) Index",
+"R_10": "Volatility 10 Index",
+"1HZ10V": "Volatility 10 (1s) Index",
+"stpRNG": "Step Index",
+"stpRNG2": "Step Index 200",
+"stpRNG3": "Step Index 300",
+"stpRNG4": "Step Index 400",
+"stpRNG5": "Step Index 500",

@@ -1,0 +1,8 @@
+# MAPEO REAL DE SÍMBOLOS MT5
+# Fecha: 2025-08-26 18:21:05
+
+R_10 = Volatility 10 (1s) Index
+R_25 = Volatility 25 Index
+R_50 = Crash 500 Index
+R_75 = Volatility 75 Index
+R_100 = Crash 1000 Index
