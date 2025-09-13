@@ -1,0 +1,18 @@
+strategy:
+  macd_fast: 12
+  macd_signal: 9
+  macd_slow: 26
+  risk_per_trade: 0.02
+  risk_reward_ratio: 2.0
+  sma_fast: 8
+  sma_slow: 50
+symbols:
+- R_75
+- R_100
+- R_50
+timeframe: M5
+trading_system:
+  mode: demo
+  name: AI Trading System V2
+  version: 2.0.0
+update_interval: 5

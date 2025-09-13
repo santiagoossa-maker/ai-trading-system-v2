@@ -1,5 +1,5 @@
 # Asset-Specific Trading Strategies Configuration
-# Optimized configurations for 14 different synthetic indices
+# Optimized configurations for 15 different synthetic indices
 
 # Lot sizes for each asset
 lot_sizes:
@@ -18,6 +18,29 @@ lot_sizes:
   "stpRNG3": 0.1
   "stpRNG4": 0.1
   "stpRNG5": 0.1
+
+# Asset categories for strategy optimization
+asset_categories:
+  volatility_indices:
+    assets: ["R_75", "R_100", "R_50", "R_25", "R_10"]
+    strategy_config:
+      primary_strategy: "SMA_MACD"
+      timeframe: "M5"
+      risk_multiplier: 1.0
+  
+  hz_indices:
+    assets: ["1HZ75V", "1HZ100V", "1HZ50V", "1HZ10V", "1HZ25V"]
+    strategy_config:
+      primary_strategy: "EMA_MACD"
+      timeframe: "M5"
+      risk_multiplier: 0.8
+  
+  step_indices:
+    assets: ["stpRNG", "stpRNG2", "stpRNG3", "stpRNG4", "stpRNG5"]
+    strategy_config:
+      primary_strategy: "BOLLINGER_RSI"
+      timeframe: "M1"
+      risk_multiplier: 1.2
 
 # Asset-specific strategy configurations
 assets:
